@@ -1,0 +1,8 @@
+label: Languages
+type: multiselect
+translate: false
+options:
+  type: query
+  query: kirby.languages
+  text: "{{ item.name }}"
+  value: "{{ item.code }}"

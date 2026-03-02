@@ -1,0 +1,30 @@
+{
+	"name": "medienbaecker/kirby-language-access",
+	"description": "Control public language visibility and restrict translators to assigned languages",
+	"type": "kirby-plugin",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Thomas Günther",
+			"email": "mail@medienbaecker.com"
+		}
+	],
+	"require": {
+		"php": "^8.2",
+		"getkirby/composer-installer": "^1.2",
+		"getkirby/cms": "^5.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"getkirby/composer-installer": true
+		}
+	},
+	"archive": {
+		"exclude": [
+			".DS_Store",
+			".gitattributes",
+			".gitignore",
+			"composer.lock"
+		]
+	}
+}

@@ -1,0 +1,35 @@
+title: Translator
+description: Can only edit content in assigned languages
+permissions:
+  medienbaecker.language-access:
+    editAll: false
+  access:
+    languages: true
+    system: false
+    users: false
+  pages:
+    "*": false
+    access: true
+    read: true
+    list: true
+    preview: true
+    update: true
+    changeTitle: true
+    changeSlug: true
+  files:
+    "*": false
+    access: true
+    read: true
+    list: true
+    update: true
+  site:
+    update: true
+  languages:
+    "*": false
+    update: true
+  users: false
+  user:
+    "*": false
+fields:
+  languages:
+    extends: language-access/fields/languages

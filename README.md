@@ -58,6 +58,30 @@ extends: language-access/users/translator
 
 Create a user with that role in the Panel and pick the languages they're allowed to edit.
 
+## Auto-detect public language
+
+Opt-in: the plugin can take over Kirby's built-in language detection and restrict it to the public language set. Anything Kirby's `languages.detect` does — detecting on `/` and on language-less deep URLs like `/faq` — the plugin does, but only picks among the languages listed in `medienbaecker.language-access.languages`.
+
+```php
+return [
+    'languages' => [
+        'detect' => false, // let the plugin handle this
+    ],
+    'medienbaecker.language-access.languages' => ['de', 'en'],
+    'medienbaecker.language-access.detect'    => true,
+    'medienbaecker.language-access.fallback'  => 'en',
+];
+```
+
+- `detect` (default `false`) — turn on public-only detection.
+- `fallback` (default: site default) — language shown when the browser's `Accept-Language` doesn't match any public language. Useful when the site default isn't the best landing for international visitors.
+
+Matching follows Kirby's own three-tier logic (5-char locale, 2-char code, broad locale prefix), then falls back to `fallback`. Responses include `Vary: Accept-Language` so well-behaved caches key on the header — if you're behind an edge cache (nginx, Varnish, CDN), check that the cache honors `Vary: Accept-Language` on the `/` redirect, otherwise visitors may be served another language's cached response.
+
+## Guard
+
+Anonymous visitors trying to reach a non-public language URL (e.g. `/sv/faq` when only `de` and `en` are public) receive a 404. Logged-in users pass through, so translators can still preview their assigned languages.
+
 ## Language menu
 
 `$site->enabledLanguages()` gives you the languages that are publicly available. Here's a simple example of a language menu:

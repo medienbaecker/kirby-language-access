@@ -45,10 +45,17 @@ Kirby::plugin('medienbaecker/language-access', [
 	],
 	'siteMethods' => [
 		'enabledLanguages' => function () {
-			$enabled = kirby()->option('medienbaecker.language-access.languages');
-			return kirby()->languages()->filter(
-				fn($lang) => $lang->isDefault() || in_array($lang->code(), $enabled)
-			);
+			$kirby = kirby();
+			$enabled = (array) $kirby->option('medienbaecker.language-access.languages', []);
+			$default = $kirby->defaultLanguage()?->code();
+
+			$codes = in_array($default, $enabled)
+				? $enabled
+				: [$default, ...$enabled];
+
+			return $kirby->languages()
+				->filter(fn($lang) => in_array($lang->code(), $codes))
+				->sortBy(fn($lang) => array_search($lang->code(), $codes), 'asc', SORT_NUMERIC);
 		}
 	],
 	'routes' => [
